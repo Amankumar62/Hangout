@@ -13,6 +13,7 @@
   display: flex;
   padding: 0.5rem;
   flex-direction: column;
+  background-color: #fff;
   text-align: center;
 }
 .suggestion-heading {
