@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
-import signup from "./animation/signup.json";
+import signup from "../animation/signup.json";
 import "./Signup.css";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 export const Signup = () => {
+  const { signupHandler } = useContext(AuthContext);
   return (
     <>
       <div className="signup-container">
@@ -11,10 +14,10 @@ export const Signup = () => {
           animationData={signup}
           loop={true}
         />
-        <form className="signup-form">
+        <form className="signup-form" onSubmit={(e) => signupHandler(e)}>
           <img
             className="login-image"
-            src={require("./images/logo.png")}
+            src={require("../images/logo.png")}
             alt="hangout logo"
           />
           <h1 className="signup-form-heading">Sign up</h1>
