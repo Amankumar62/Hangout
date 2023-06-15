@@ -10,6 +10,8 @@ const authReducer = (prevState, { type, payload }) => {
         user: { ...payload.foundUser },
         token: payload.encodedToken,
       };
+    case "UPDATE_USER":
+      return { ...prevState, user: { ...payload } };
     case "UPDATE_BOOKMARK":
       return {
         ...prevState,
@@ -66,6 +68,10 @@ export const AuthProvider = ({ children }) => {
     return userData.isLoggedIn;
   };
 
+  const updateUserHandler = (updatedUser) => {
+    dispatch({ type: "UPDATE_USER", payload: updatedUser });
+  };
+
   const addBookmarkHandler = async (postId) => {
     const token = localStorage.getItem("token");
     try {
@@ -110,14 +116,20 @@ export const AuthProvider = ({ children }) => {
       : addBookmarkHandler(postId);
   };
 
+  const isBookmarked = (postId) => {
+    return userData.user.bookmarks.find((id) => id === postId);
+  };
   return (
     <AuthContext.Provider
       value={{
         userData,
         loggedUsername: userData.user.username,
+        bookmarked: userData.user.bookmarks,
         loginHandler,
+        updateUserHandler,
         signupHandler,
         toggleBookmark,
+        isBookmarked,
         checkLogin,
       }}
     >
