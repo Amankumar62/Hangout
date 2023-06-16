@@ -123,6 +123,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         userData,
+        user: userData.user,
         loggedUsername: userData.user.username,
         bookmarked: userData.user.bookmarks,
         loginHandler,

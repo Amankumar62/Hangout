@@ -7,6 +7,7 @@ import { Explore } from "./pages/Explore";
 import { Bookmark } from "./pages/Bookmark";
 import { Liked } from "./pages/Liked";
 import { PostPage } from "./pages/PostPage";
+import { Profile } from "./pages/Profile";
 import { RequireAuth } from "./auth/RequireAuth";
 import "./App.css";
 import { MockAPI } from "./pages/Mockman";
@@ -56,7 +57,22 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="/posts/:postId" element={<PostPage />} />
+          <Route
+            path="/posts/:postId"
+            element={
+              <RequireAuth>
+                <PostPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/profile/:userId"
+            element={
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            }
+          />
         </Route>
 
         <Route path="/mockman" element={<MockAPI />} />

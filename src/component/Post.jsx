@@ -10,12 +10,12 @@ import { useContext } from "react";
 import { PostContext } from "../context/PostContext";
 import { AuthContext } from "../context/AuthContext";
 import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router";
 export const Post = ({ postDetails }) => {
   const { _id, content, createdAt, likes, username } = postDetails;
   const { toggleLikeHandler, isLikedHandler } = useContext(PostContext);
   const { searchUserDetail } = useContext(UserContext);
   const { toggleBookmark, isBookmarked } = useContext(AuthContext);
-
   const { firstName, lastName, profileImg } = searchUserDetail(username);
 
   const copyPostUrl = async (postId) => {
@@ -26,7 +26,7 @@ export const Post = ({ postDetails }) => {
       console.error(e);
     }
   };
-
+  const navigate = useNavigate();
   return (
     <>
       <main className="post-container">
@@ -47,7 +47,9 @@ export const Post = ({ postDetails }) => {
             <MoreHorizIcon />
           </div>
         </section>
-        <p>{content}</p>
+        <div onClick={() => navigate(`/posts/${_id}`)}>
+          <p>{content}</p>
+        </div>
         <section className="post-action-container">
           <div>
             {isLikedHandler(_id) ? (
@@ -58,7 +60,7 @@ export const Post = ({ postDetails }) => {
             ) : (
               <FavoriteBorderIcon onClick={() => toggleLikeHandler(_id)} />
             )}
-            <span>{likes.likeCount}</span>
+            <span>{likes?.likeCount}</span>
           </div>
           {isBookmarked(_id) ? (
             <BookmarkIcon
