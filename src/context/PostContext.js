@@ -131,6 +131,25 @@ export const PostProvider = ({ children }) => {
       : false;
   };
 
+  const createPost = async () => {
+    const token = localStorage.getItem("token");
+    const postBody = JSON.stringify({ postData: { name: "jumbo" } });
+    try {
+      const response = await fetch("/api/posts", {
+        method: "POST",
+        headers: { authorization: token },
+        body: postBody,
+      });
+
+      if (response.status === 201) {
+        const responseData = await response.json();
+        console.log(responseData);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -145,6 +164,7 @@ export const PostProvider = ({ children }) => {
         posts: postData.posts,
         userPosts: postData.userPosts,
         getUserPost,
+        createPost,
         getBookmarkedPost,
         getLikedPost,
         getPostDetails,
