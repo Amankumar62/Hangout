@@ -105,19 +105,30 @@ export const UserProvider = ({ children }) => {
         !followers.find(({ username }) => username === loggedUsername) &&
         username !== loggedUsername
     );
-    // return usersData.users;
+  };
+
+  const shouldFollowEnable = (username) => {
+    return username !== loggedUsername;
+  };
+
+  const isFollowing = (checking) => {
+    const user = usersData.users.find(({ username }) => username === checking);
+    return user.followers.find(({ username }) => username === loggedUsername);
   };
 
   useEffect(() => {
     getUsersData();
   }, []);
+
   return (
     <UserContext.Provider
       value={{
         users: usersData.users,
         searchUserDetail,
         toggleFollow,
+        shouldFollowEnable,
         unFollowUserHandler,
+        isFollowing,
         getPotentialFollowUser,
       }}
     >
