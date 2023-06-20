@@ -6,6 +6,7 @@ import App from "./App";
 import { makeServer } from "./server";
 import { AuthProvider } from "./context/AuthContext";
 import { PostProvider } from "./context/PostContext";
+import { UserProvider } from "./context/UserContext";
 
 //call make server
 makeServer();
@@ -16,7 +17,9 @@ root.render(
     <Router>
       <AuthProvider>
         <PostProvider>
-          <App />
+          <UserProvider>
+            <App />
+          </UserProvider>
         </PostProvider>
       </AuthProvider>
     </Router>

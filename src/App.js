@@ -6,6 +6,8 @@ import { Signup } from "./pages/Signup";
 import { Explore } from "./pages/Explore";
 import { Bookmark } from "./pages/Bookmark";
 import { Liked } from "./pages/Liked";
+import { PostPage } from "./pages/PostPage";
+import { Profile } from "./pages/Profile";
 import { RequireAuth } from "./auth/RequireAuth";
 import "./App.css";
 import { MockAPI } from "./pages/Mockman";
@@ -32,7 +34,6 @@ function App() {
             }
           />
           <Route
-            index
             path="/explore"
             element={
               <RequireAuth>
@@ -41,7 +42,6 @@ function App() {
             }
           />
           <Route
-            index
             path="/bookmark"
             element={
               <RequireAuth>
@@ -50,7 +50,6 @@ function App() {
             }
           />
           <Route
-            index
             path="/liked"
             element={
               <RequireAuth>
@@ -58,7 +57,24 @@ function App() {
               </RequireAuth>
             }
           />
+          <Route
+            path="/posts/:postId"
+            element={
+              <RequireAuth>
+                <PostPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/profile/:username"
+            element={
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            }
+          />
         </Route>
+
         <Route path="/mockman" element={<MockAPI />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

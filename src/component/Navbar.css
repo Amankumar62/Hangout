@@ -10,9 +10,15 @@
   top: 0;
   left: 0;
   right: 0;
+  z-index: 999999;
 }
 .nav-brand-logo {
   width: 8rem;
+}
+.nav-user-image {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
 }
 .search-input {
   padding: 0.5rem;
