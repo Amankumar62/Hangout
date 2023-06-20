@@ -26,6 +26,12 @@ const postReducer = (prevState, { type, payload }) => {
           ...prevState.userPosts,
         ],
       };
+    case "DELETE_POST":
+      return {
+        ...prevState,
+        posts: prevState.posts.filter(({ _id }) => _id !== payload),
+        userPosts: prevState.userPosts.filter(({ _id }) => _id !== payload),
+      };
     default:
       return prevState;
   }
@@ -220,6 +226,25 @@ export const PostProvider = ({ children }) => {
     }
   };
 
+  const deletePost = async (postId) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`/api/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          authorization: token,
+        },
+      });
+      if (response.status === 201) {
+        const responseData = await response.json();
+        dispatch({ type: "DELETE_POST", payload: postId });
+        console.log(responseData);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -238,6 +263,7 @@ export const PostProvider = ({ children }) => {
         getBookmarkedPost,
         getLikedPost,
         getPostDetails,
+        deletePost,
         isLikedHandler,
         toggleLikeHandler,
       }}
