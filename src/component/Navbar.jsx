@@ -14,7 +14,11 @@ export const Navbar = () => {
           alt="hangout logo"
         />
 
-        <input className="search-input" placeholder="Search User" />
+        <input
+          type="search"
+          className="search-input"
+          placeholder="Search User"
+        />
         <Link to={`/profile/${username}`}>
           <img className="nav-user-image" src={profileImg} alt="user" />
         </Link>
