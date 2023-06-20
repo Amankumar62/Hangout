@@ -32,6 +32,16 @@ const postReducer = (prevState, { type, payload }) => {
         posts: prevState.posts.filter(({ _id }) => _id !== payload),
         userPosts: prevState.userPosts.filter(({ _id }) => _id !== payload),
       };
+    case "EDIT_POST":
+      return {
+        ...prevState,
+        posts: prevState.posts.map((post) =>
+          post._id === payload._id ? payload : post
+        ),
+        userPosts: prevState.userPosts.map((post) =>
+          post._id === payload._id ? payload : post
+        ),
+      };
     default:
       return prevState;
   }
@@ -236,9 +246,39 @@ export const PostProvider = ({ children }) => {
         },
       });
       if (response.status === 201) {
-        const responseData = await response.json();
         dispatch({ type: "DELETE_POST", payload: postId });
-        console.log(responseData);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const editPost = async (e, postId) => {
+    e.preventDefault();
+    const contentVal = e.target.elements.postMsgEdit.value;
+    if (contentVal === "") {
+      return;
+    }
+    const token = localStorage.getItem("token");
+    const postBody = JSON.stringify({
+      postData: {
+        content: contentVal,
+      },
+    });
+    try {
+      const response = await fetch(`/api/posts/edit/${postId}`, {
+        method: "POST",
+        headers: {
+          authorization: token,
+        },
+        body: postBody,
+      });
+      if (response.status === 201) {
+        const responseData = await response.json();
+
+        const post = responseData.posts.find(({ _id }) => _id === postId);
+        dispatch({ type: "EDIT_POST", payload: post });
+        return true;
       }
     } catch (e) {
       console.error(e);
@@ -264,6 +304,7 @@ export const PostProvider = ({ children }) => {
         getLikedPost,
         getPostDetails,
         deletePost,
+        editPost,
         isLikedHandler,
         toggleLikeHandler,
       }}

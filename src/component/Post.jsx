@@ -13,6 +13,7 @@ import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router";
 import { Popper } from "@mui/material";
 import { Modal } from "./Modal";
+import { EditPost } from "./EditPost";
 export const Post = ({ postDetails }) => {
   const { _id, content, createdAt, likes, username, mediaURL } = postDetails;
   const { toggleLikeHandler, isLikedHandler, deletePost } =
@@ -42,7 +43,7 @@ export const Post = ({ postDetails }) => {
   return (
     <>
       <Modal open={isOpen} close={modalCloseHandler}>
-        <h1>Hello</h1>
+        <EditPost postDetails={postDetails} close={modalCloseHandler} />
       </Modal>
       <main className="post-container">
         <section className="post-header">

@@ -1,4 +1,6 @@
 import "./Modal.css";
+import CloseIcon from "@mui/icons-material/Close";
+
 export const Modal = ({ children, open, close }) => {
   if (!open) {
     return null;
@@ -7,8 +9,10 @@ export const Modal = ({ children, open, close }) => {
     <>
       <div className="overlay-styles" onClick={close} />
       <div className="modal-styles">
-        <div>
-          <button onClick={close}>Close</button>
+        <div className="close-modal">
+          <button onClick={close}>
+            <CloseIcon />
+          </button>
         </div>
         {children}
       </div>
