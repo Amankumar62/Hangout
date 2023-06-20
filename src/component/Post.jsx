@@ -12,9 +12,12 @@ import { AuthContext } from "../context/AuthContext";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router";
 import { Popper } from "@mui/material";
+import { Modal } from "./Modal";
+import { EditPost } from "./EditPost";
 export const Post = ({ postDetails }) => {
   const { _id, content, createdAt, likes, username, mediaURL } = postDetails;
-  const { toggleLikeHandler, isLikedHandler } = useContext(PostContext);
+  const { toggleLikeHandler, isLikedHandler, deletePost } =
+    useContext(PostContext);
   const { searchUserDetail } = useContext(UserContext);
   const { toggleBookmark, isBookmarked, loggedUsername } =
     useContext(AuthContext);
@@ -32,10 +35,16 @@ export const Post = ({ postDetails }) => {
   const handlePopper = (event) => {
     anchorEl === null ? setAnchorEl(event.currentTarget) : setAnchorEl(null);
   };
-
+  const [isOpen, setIsOpen] = useState(false);
+  const modalCloseHandler = () => {
+    setIsOpen(false);
+  };
   const navigate = useNavigate();
   return (
     <>
+      <Modal open={isOpen} close={modalCloseHandler}>
+        <EditPost postDetails={postDetails} close={modalCloseHandler} />
+      </Modal>
       <main className="post-container">
         <section className="post-header">
           <div className="post-user">
@@ -45,6 +54,7 @@ export const Post = ({ postDetails }) => {
               alt="user"
               src={profileImg}
             />
+
             <div>
               <div className="post-user-detail">
                 <p className="post-username">{firstName + " " + lastName}</p>
@@ -71,10 +81,10 @@ export const Post = ({ postDetails }) => {
             >
               <ul className="post-update-options">
                 <li>
-                  <button>Edit</button>
+                  <button onClick={() => setIsOpen(true)}>Edit</button>
                 </li>
                 <li>
-                  <button>Delete</button>
+                  <button onClick={() => deletePost(_id)}>Delete</button>
                 </li>
               </ul>
             </Popper>
