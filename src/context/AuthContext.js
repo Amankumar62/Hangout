@@ -76,6 +76,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const checkLogin = () => {
+    // return localStorage.getItem("token") !== undefined;
     return userData.isLoggedIn;
   };
 
