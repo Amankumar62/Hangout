@@ -1,15 +1,21 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useParams } from "react-router";
 import LogoutIcon from "@mui/icons-material/Logout";
 import "./Profile.css";
 import { AuthContext } from "../context/AuthContext";
+import { Modal } from "../component/Modal";
+import { EditProfile } from "../component/EditProfile";
 export const Profile = () => {
   const { searchUserDetail, toggleFollow, shouldFollowEnable, isFollowing } =
     useContext(UserContext);
   const { logoutHandler } = useContext(AuthContext);
   const { username } = useParams();
-  //   console.log(searchUserDetail(username));
+  const [isOpen, setIsOpen] = useState(false);
+  const userDetail = searchUserDetail(username);
+  const modalCloseHandler = () => {
+    setIsOpen(false);
+  };
   const {
     _id,
     firstName,
@@ -18,8 +24,9 @@ export const Profile = () => {
     bannerImg,
     quote,
     followers,
+    portfolioURL,
     following,
-  } = searchUserDetail(username);
+  } = userDetail;
   return (
     <>
       <div className="home-container">
@@ -48,7 +55,13 @@ export const Profile = () => {
               className="profile-actions"
               style={{ display: shouldFollowEnable(username) && "none" }}
             >
-              <button>Edit Profile</button>
+              <button onClick={() => setIsOpen(true)}>Edit Profile</button>
+              <Modal open={isOpen} close={modalCloseHandler}>
+                <EditProfile
+                  userDetail={userDetail}
+                  close={modalCloseHandler}
+                />
+              </Modal>
               <LogoutIcon
                 className="profile-logout"
                 onClick={() => logoutHandler()}
@@ -59,12 +72,8 @@ export const Profile = () => {
           <div>
             <p className="profile-quote">{quote}</p>
             <div className="profile-links">
-              <a
-                target="_blank"
-                href="https://github.com/Amankumar62"
-                rel="noreferrer"
-              >
-                https://www.something.com
+              <a target="_blank" href={portfolioURL} rel="noreferrer">
+                {portfolioURL}
               </a>
             </div>
           </div>

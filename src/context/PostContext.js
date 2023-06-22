@@ -189,17 +189,16 @@ export const PostProvider = ({ children }) => {
     const media = e.target.elements.media.files[0];
     const reset = e.target.elements.reset;
     if (postMsg === "" && !media) {
-      console.log("entered");
       return;
     }
-    if (Math.floor(media.size * 0.000001) > 4) {
+    if (Math.floor(media?.size * 0.000001) > 4) {
       alert("File Size greater than 4mb");
       return;
     }
     const cloudinaryLink = await getMediaUploadLink(media);
     const token = localStorage.getItem("token");
     let mediaData = {};
-    if (media.type.slice(0, 5) === "image") {
+    if (media?.type?.slice(0, 5) === "image") {
       mediaData = {
         images: { imageURL: cloudinaryLink, deleteToken: "" },
         video: { videoURL: "", deleteToken: "" },
@@ -305,6 +304,7 @@ export const PostProvider = ({ children }) => {
         getPostDetails,
         deletePost,
         editPost,
+        getMediaUploadLink,
         isLikedHandler,
         toggleLikeHandler,
       }}

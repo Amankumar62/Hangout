@@ -60,13 +60,18 @@
 .create-post-form {
   display: flex;
   flex-direction: column;
+  min-width: 300px;
 }
 .create-actions {
   display: flex;
 }
 .create-actions p {
   margin-left: 1rem;
+  margin-right: 1rem;
   font-weight: 600;
+  display: block;
+  width: 90%;
+  overflow-wrap: break-word;
 }
 .home-create-post-actions button {
   padding: 0.5rem;

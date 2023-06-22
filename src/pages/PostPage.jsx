@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { PostContext } from "../context/PostContext";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -14,12 +14,16 @@ import { UserContext } from "../context/UserContext";
 export const PostPage = () => {
   const { toggleLikeHandler, isLikedHandler } = useContext(PostContext);
   const { searchUserDetail } = useContext(UserContext);
-  const { toggleBookmark, isBookmarked } = useContext(AuthContext);
+  const { toggleBookmark, isBookmarked, loggedUsername } =
+    useContext(AuthContext);
 
   const { postId } = useParams();
   const { getPostDetails } = useContext(PostContext);
   const { _id, content, createdAt, likes, username } = getPostDetails(postId);
   const { firstName, lastName, profileImg } = searchUserDetail(username);
+
+  const navigate = useNavigate();
+
   const copyPostUrl = async (postId) => {
     const route = `${window.location.origin}/posts/${postId}`;
     try {
@@ -34,7 +38,12 @@ export const PostPage = () => {
         <main className="post-container">
           <section className="post-header">
             <div className="post-user">
-              <img alt="user" src={profileImg} />
+              <img
+                alt="user"
+                src={profileImg}
+                onClick={() => navigate(`/profile/${username}`)}
+                style={{ cursor: "pointer" }}
+              />
               <div>
                 <div className="post-user-detail">
                   <p className="post-username">{firstName + " " + lastName}</p>
@@ -46,7 +55,9 @@ export const PostPage = () => {
               </div>
             </div>
             <div>
-              <MoreHorizIcon />
+              <MoreHorizIcon
+                style={{ display: loggedUsername === username ? "" : "none" }}
+              />
             </div>
           </section>
           <div>
