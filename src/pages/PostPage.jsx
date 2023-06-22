@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { PostContext } from "../context/PostContext";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -8,18 +8,24 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ShareIcon from "@mui/icons-material/Share";
+import { Popper } from "@mui/material";
+import { Modal } from "../component/Modal";
+import { EditPost } from "../component/EditPost";
 import { AuthContext } from "../context/AuthContext";
 import { UserContext } from "../context/UserContext";
 
 export const PostPage = () => {
-  const { toggleLikeHandler, isLikedHandler } = useContext(PostContext);
+  const { toggleLikeHandler, isLikedHandler, deletePost } =
+    useContext(PostContext);
   const { searchUserDetail } = useContext(UserContext);
   const { toggleBookmark, isBookmarked, loggedUsername } =
     useContext(AuthContext);
 
   const { postId } = useParams();
   const { getPostDetails } = useContext(PostContext);
-  const { _id, content, createdAt, likes, username } = getPostDetails(postId);
+  const postDetails = getPostDetails(postId);
+  const { _id, content, createdAt, likes, username } = postDetails;
+
   const { firstName, lastName, profileImg } = searchUserDetail(username);
 
   const navigate = useNavigate();
@@ -32,9 +38,20 @@ export const PostPage = () => {
       console.error(e);
     }
   };
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handlePopper = (event) => {
+    anchorEl === null ? setAnchorEl(event.currentTarget) : setAnchorEl(null);
+  };
+  const [isOpen, setIsOpen] = useState(false);
+  const modalCloseHandler = () => {
+    setIsOpen(false);
+  };
   return (
     <>
       <div className="home-container">
+        <Modal open={isOpen} close={modalCloseHandler}>
+          <EditPost postDetails={postDetails} close={modalCloseHandler} />
+        </Modal>
         <main className="post-container">
           <section className="post-header">
             <div className="post-user">
@@ -54,10 +71,36 @@ export const PostPage = () => {
                 <p className="post-userhandle">@{username}</p>
               </div>
             </div>
-            <div>
+            <div style={{ display: loggedUsername === username ? "" : "none" }}>
               <MoreHorizIcon
-                style={{ display: loggedUsername === username ? "" : "none" }}
+                style={{ cursor: "pointer" }}
+                onClick={handlePopper}
               />
+              <Popper
+                open={Boolean(anchorEl)}
+                onClose={handlePopper}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                <ul className="post-update-options">
+                  <li>
+                    <button onClick={() => setIsOpen(true)}>Edit</button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        navigate("/home");
+                        deletePost(_id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </li>
+                </ul>
+              </Popper>
             </div>
           </section>
           <div>
