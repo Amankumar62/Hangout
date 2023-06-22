@@ -31,3 +31,10 @@
 .edit-profile-username {
   text-transform: capitalize;
 }
+.edit-profile-bio {
+  resize: none;
+  height: 100px;
+}
+.edit-user-btn {
+  width: 100%;
+}

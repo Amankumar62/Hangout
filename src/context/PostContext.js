@@ -304,6 +304,7 @@ export const PostProvider = ({ children }) => {
         getPostDetails,
         deletePost,
         editPost,
+        getMediaUploadLink,
         isLikedHandler,
         toggleLikeHandler,
       }}
