@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { useParams } from "react-router";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { Post } from "../component/Post";
 import "./Profile.css";
 import { AuthContext } from "../context/AuthContext";
 import { Modal } from "../component/Modal";
@@ -27,6 +28,25 @@ export const Profile = () => {
     portfolioURL,
     following,
   } = userDetail;
+
+  const [userPosts, setUserPosts] = useState([]);
+
+  const getUserPost = async () => {
+    try {
+      const response = await fetch(`/api/posts/user/${username}`);
+      if (response.status === 200) {
+        const responseData = await response.json();
+        setUserPosts(responseData.posts);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getUserPost();
+  }, [username]);
+
   return (
     <>
       <div className="home-container">
@@ -78,11 +98,20 @@ export const Profile = () => {
             </div>
           </div>
           <div className="profile-popularity">
-            <span>5 Posts</span>
+            <span>{userPosts.length} Posts</span>
             <span>{followers.length} Followers</span>
             <span>{following.length} Following</span>
           </div>
         </section>
+        <div className="profile-user-posts">
+          <ul>
+            {userPosts?.map((post) => (
+              <li key={post._id}>
+                <Post postDetails={post} />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   );
