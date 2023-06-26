@@ -103,6 +103,7 @@ export const Profile = () => {
             <span>{following.length} Following</span>
           </div>
         </section>
+
         <div className="profile-user-posts">
           <ul>
             {userPosts?.map((post) => (
