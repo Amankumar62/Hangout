@@ -9,6 +9,8 @@ const profileReducer = (prevState, { type, payload }) => {
       return { ...prevState, profileQuote: payload };
     case "UPDATE_URL":
       return { ...prevState, url: payload };
+    case "UPDATE_PROFILE_IMG":
+      return { ...prevState, img: payload };
     default:
       return prevState;
   }
@@ -18,6 +20,7 @@ export const EditProfile = ({ userDetail, close }) => {
   const [profileData, dispatch] = useReducer(profileReducer, {
     profileQuote: userDetail?.quote,
     url: userDetail?.portfolioURL,
+    img: "",
   });
   const { firstName, lastName, username, profileImg } = userDetail;
   const { editProfileHandler } = useContext(UserContext);
@@ -54,12 +57,23 @@ export const EditProfile = ({ userDetail, close }) => {
               onClick={handleProfileClick}
             />
           </span>
+          {profileData?.img === "" ? null : (
+            <p className="edit-profile-filename">
+              New Avatar Loaded : {profileData?.img}
+            </p>
+          )}
           <input
             type="file"
             accept="image/*"
             id="profileImg"
             ref={profileImageRef}
             style={{ display: "none" }}
+            onChange={(e) => {
+              dispatch({
+                type: "UPDATE_PROFILE_IMG",
+                payload: e.target.files[0].name,
+              });
+            }}
           />
         </label>
         <label htmlFor="bannerImg">
