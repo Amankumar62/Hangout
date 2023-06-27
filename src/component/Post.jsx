@@ -19,7 +19,7 @@ export const Post = ({ postDetails }) => {
   const { toggleLikeHandler, isLikedHandler, deletePost } =
     useContext(PostContext);
   const { searchUserDetail } = useContext(UserContext);
-  const { toggleBookmark, isBookmarked, loggedUsername } =
+  const { toggleBookmark, isBookmarked, loggedUsername, toastHandler } =
     useContext(AuthContext);
   const { firstName, lastName, profileImg } = searchUserDetail(username);
 
@@ -27,6 +27,7 @@ export const Post = ({ postDetails }) => {
     const route = `${window.location.origin}/posts/${postId}`;
     try {
       await navigator.clipboard.writeText(route);
+      toastHandler("Post Link Copied");
     } catch (e) {
       console.error(e);
     }

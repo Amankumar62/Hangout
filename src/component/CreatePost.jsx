@@ -40,7 +40,9 @@ export const CreatePost = () => {
           <button type="submit">Post</button>
           <button
             type="reset"
-            onClick={() => setFileName("")}
+            onClick={() => {
+              setFileName("");
+            }}
             id="reset"
             style={{ display: "none" }}
           >
