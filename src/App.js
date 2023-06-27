@@ -9,12 +9,15 @@ import { Liked } from "./pages/Liked";
 import { PostPage } from "./pages/PostPage";
 import { Profile } from "./pages/Profile";
 import { RequireAuth } from "./auth/RequireAuth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { MockAPI } from "./pages/Mockman";
 
 function App() {
   return (
     <div className="App">
+      <ToastContainer />
       <Routes>
         <Route
           path="/"

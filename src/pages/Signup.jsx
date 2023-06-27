@@ -5,13 +5,14 @@ import "./Signup.css";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 export const Signup = () => {
-  const { signupHandler } = useContext(AuthContext);
+  const { signupHandler, toastHandler } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [checkPassword, setCheckPassword] = useState("");
 
   const passwordMatcher = (e) => {
     if (e.target.elements.confirm_password.value !== checkPassword) {
-      alert("password not matching");
+      e.preventDefault();
+      toastHandler("Password not matching", "error");
       return;
     }
     signupHandler(e);
