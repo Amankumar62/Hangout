@@ -3,6 +3,7 @@ import { UserContext } from "../context/UserContext";
 import { useParams } from "react-router";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Post } from "../component/Post";
+import { UserListing } from "../component/UserListing";
 import { ColorRing } from "react-loader-spinner";
 import "./Profile.css";
 import { AuthContext } from "../context/AuthContext";
@@ -16,6 +17,7 @@ export const Profile = () => {
   const { logoutHandler } = useContext(AuthContext);
   const { username } = useParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [showFollow, setShowFollow] = useState(false);
   const userDetail = searchUserDetail(username);
   const modalCloseHandler = () => {
     setIsOpen(false);
@@ -33,6 +35,8 @@ export const Profile = () => {
   } = userDetail;
   const [isLoading, setIsLoading] = useState(true);
 
+  const [list, setList] = useState([]);
+
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => {
@@ -44,6 +48,9 @@ export const Profile = () => {
   return (
     <>
       <div className="home-container">
+        <Modal open={showFollow} close={() => setShowFollow(false)}>
+          <UserListing users={list} />
+        </Modal>
         <section className="profile-container">
           <img
             src={bannerImg}
@@ -93,8 +100,24 @@ export const Profile = () => {
           </div>
           <div className="profile-popularity">
             <span>{userPosts.length} Posts</span>
-            <span>{followers.length} Followers</span>
-            <span>{following.length} Following</span>
+            <span
+              className="clickable"
+              onClick={() => {
+                setList(followers);
+                setShowFollow(true);
+              }}
+            >
+              {followers.length} Followers
+            </span>
+            <span
+              className="clickable"
+              onClick={() => {
+                setList(following);
+                setShowFollow(true);
+              }}
+            >
+              {following.length} Following
+            </span>
           </div>
         </section>
 
