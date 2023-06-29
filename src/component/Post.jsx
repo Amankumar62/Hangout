@@ -136,10 +136,10 @@ export const Post = ({ postDetails }) => {
           ) : (
             <BookmarkBorderIcon onClick={() => toggleBookmark(_id)} />
           )}
-          <div>
+          {/* <div>
             <ChatBubbleOutlineIcon />
             <span>1</span>
-          </div>
+          </div> */}
           <ShareIcon onClick={() => copyPostUrl(_id)} />
         </section>
       </main>
