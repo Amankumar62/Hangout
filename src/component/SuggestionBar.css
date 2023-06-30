@@ -13,6 +13,7 @@
   border: 1px solid #eee;
   display: flex;
   padding: 0.5rem;
+  justify-content: space-between;
   flex-direction: column;
   background-color: #fff;
   text-align: center;
