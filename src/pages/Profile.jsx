@@ -44,6 +44,15 @@ export const Profile = () => {
     }, 1000);
   }, [username]);
 
+  useEffect(() => {
+    isOpen && (document.body.style.overflow = "hidden");
+    !isOpen && (document.body.style.overflow = "unset");
+  }, [isOpen]);
+  useEffect(() => {
+    showFollow && (document.body.style.overflow = "hidden");
+    !showFollow && (document.body.style.overflow = "unset");
+  }, [showFollow]);
+
   const userPosts = filterUserPost(username);
   return (
     <>

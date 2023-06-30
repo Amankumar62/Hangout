@@ -50,6 +50,8 @@ export const CreatePost = () => {
             type="reset"
             onClick={() => {
               setFileName("");
+              setText("");
+              setShowEmoji(false);
             }}
             id="reset"
             style={{ display: "none" }}
