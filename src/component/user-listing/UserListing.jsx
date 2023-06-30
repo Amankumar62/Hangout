@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import "./UserListing.css";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 export const UserListing = ({ users }) => {
   const { isFollowing, toggleFollow } = useContext(UserContext);
   return (

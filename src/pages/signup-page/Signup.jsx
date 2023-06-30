@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
-import signup from "../animation/signup.json";
+import signup from "../../animation/signup.json";
 import "./Signup.css";
 import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 export const Signup = () => {
   const { signupHandler, toastHandler } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +28,7 @@ export const Signup = () => {
         <form className="signup-form" onSubmit={(e) => passwordMatcher(e)}>
           <img
             className="login-image"
-            src={require("../images/logo.png")}
+            src={require("../../images/logo.png")}
             alt="hangout logo"
           />
           <h1 className="signup-form-heading">Sign up</h1>

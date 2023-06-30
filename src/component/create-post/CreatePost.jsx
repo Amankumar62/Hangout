@@ -1,8 +1,8 @@
 import { useContext, useRef, useState } from "react";
-import { PostContext } from "../context/PostContext";
+import { PostContext } from "../../context/PostContext";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-import { EmojiCard } from "./EmojiCard";
+import { EmojiCard } from "../emoji-card/EmojiCard";
 export const CreatePost = ({ close }) => {
   const { createPost } = useContext(PostContext);
   const inputRef = useRef(null);
