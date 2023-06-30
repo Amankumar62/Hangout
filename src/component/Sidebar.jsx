@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import ExploreIcon from "@mui/icons-material/Explore";
@@ -11,6 +11,11 @@ import { CreatePost } from "./CreatePost";
 
 export const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    isOpen && (document.body.style.overflow = "hidden");
+    !isOpen && (document.body.style.overflow = "unset");
+  }, [isOpen]);
 
   return (
     <>
