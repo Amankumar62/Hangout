@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import "./SuggestionBar.css";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router";
 export const SuggestionBar = () => {
   const { getPotentialFollowUser, toggleFollow } = useContext(UserContext);

@@ -1,15 +1,15 @@
 import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { useParams } from "react-router";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Post } from "../component/Post";
-import { UserListing } from "../component/UserListing";
+import { Post } from "../../component/post/Post";
+import { UserListing } from "../../component/user-listing/UserListing";
 import { ColorRing } from "react-loader-spinner";
 import "./Profile.css";
-import { AuthContext } from "../context/AuthContext";
-import { Modal } from "../component/Modal";
-import { EditProfile } from "../component/EditProfile";
-import { PostContext } from "../context/PostContext";
+import { AuthContext } from "../../context/AuthContext";
+import { Modal } from "../../component/modal/Modal";
+import { EditProfile } from "../../component/edit-profile/EditProfile";
+import { PostContext } from "../../context/PostContext";
 export const Profile = () => {
   const { searchUserDetail, toggleFollow, shouldFollowEnable, isFollowing } =
     useContext(UserContext);

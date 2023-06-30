@@ -1,7 +1,7 @@
-import { useContext, useReducer, useRef } from "react";
+import { useContext, useReducer, useRef, useState } from "react";
 import "./EditProfile.css";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 
 const profileReducer = (prevState, { type, payload }) => {
   switch (type) {
@@ -22,6 +22,14 @@ export const EditProfile = ({ userDetail, close }) => {
     url: userDetail?.portfolioURL,
     img: "",
   });
+  const avatar = [
+    "https://img.freepik.com/free-photo/3d-rendering-zoom-call-avatar_23-2149556785.jpg?size=626&ext=jpg&ga=GA1.1.1937692710.1688065671&semt=ais",
+    "https://img.freepik.com/free-photo/3d-rendering-zoom-call-avatar_23-2149556777.jpg?size=626&ext=jpg&ga=GA1.1.1937692710.1688065671&semt=ais",
+    "https://img.freepik.com/free-photo/fun-3d-cartoon-casual-character-woman_183364-80070.jpg?size=626&ext=jpg&ga=GA1.1.1937692710.1688065671&semt=ais",
+    "https://img.freepik.com/free-photo/3d-rendering-zoom-call-avatar_23-2149556784.jpg?size=626&ext=jpg&ga=GA1.1.1937692710.1688065671&semt=ais",
+    "https://img.freepik.com/free-photo/fun-3d-cartoon-teenage-boy_183364-81184.jpg?size=626&ext=jpg&ga=GA1.1.1937692710.1688065671&semt=ais",
+    "https://img.freepik.com/free-photo/fun-3d-cartoon-illustration-indian-businessman_183364-114440.jpg?size=626&ext=jpg&ga=GA1.1.1937692710.1688065671&semt=ais",
+  ];
   const { firstName, lastName, username, profileImg } = userDetail;
   const { editProfileHandler } = useContext(UserContext);
 
@@ -33,9 +41,9 @@ export const EditProfile = ({ userDetail, close }) => {
     }
     profileImageRef.current.click();
   };
-
-  const handleSubmit = (e) => {
-    const success = editProfileHandler(e);
+  const [profileAvatar, setProfileAvatar] = useState(profileImg);
+  const handleSubmit = (e, avatar) => {
+    const success = editProfileHandler(e, avatar);
     if (success) {
       close();
     }
@@ -43,12 +51,15 @@ export const EditProfile = ({ userDetail, close }) => {
 
   return (
     <>
-      <form className="edit-profile-form" onSubmit={(e) => handleSubmit(e)}>
+      <form
+        className="edit-profile-form"
+        onSubmit={(e) => handleSubmit(e, profileAvatar)}
+      >
         <label className="avatar-label" htmlFor="profileImg">
           Avatar
           <span>
             <img
-              src={profileImg}
+              src={profileAvatar}
               alt={username}
               className="edit-profile-image"
             />
@@ -76,6 +87,18 @@ export const EditProfile = ({ userDetail, close }) => {
             }}
           />
         </label>
+        <div className="avatar-listing-container">
+          <p>Avatar options:</p>
+          <ul className="avatar-listing">
+            {avatar.map((link, i) => (
+              <img
+                src={link}
+                alt={`avatar${i}`}
+                onClick={() => setProfileAvatar(link)}
+              />
+            ))}
+          </ul>
+        </div>
         <label htmlFor="bannerImg">
           Banner image:
           <input type="file" id="bannerImg" accept="image/*" />
