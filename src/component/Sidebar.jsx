@@ -20,7 +20,7 @@ export const Sidebar = () => {
   return (
     <>
       <Modal open={isOpen} close={() => setIsOpen(false)}>
-        <CreatePost />
+        <CreatePost close={() => setIsOpen(false)} />
       </Modal>
       <aside className="sidebar-container">
         <NavLink to="/home">

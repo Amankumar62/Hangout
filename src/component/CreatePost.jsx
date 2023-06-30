@@ -3,7 +3,7 @@ import { PostContext } from "../context/PostContext";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { EmojiCard } from "./EmojiCard";
-export const CreatePost = () => {
+export const CreatePost = ({ close }) => {
   const { createPost } = useContext(PostContext);
   const inputRef = useRef(null);
   const handleClick = () => {
@@ -17,6 +17,11 @@ export const CreatePost = () => {
       return;
     }
     setFileName(() => e.target.files[0].name);
+  };
+  const modalCloseHandler = () => {
+    if (close) {
+      close();
+    }
   };
   return (
     <>
@@ -52,6 +57,7 @@ export const CreatePost = () => {
               setFileName("");
               setText("");
               setShowEmoji(false);
+              modalCloseHandler();
             }}
             id="reset"
             style={{ display: "none" }}
