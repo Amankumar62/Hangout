@@ -10,6 +10,7 @@ export const SuggestionBar = () => {
     <>
       <div className="suggestion-container">
         <h3 className="suggestion-heading">Suggestions for you</h3>
+
         <ul>
           {users.map(({ _id, profileImg, username, firstName, lastName }) => (
             <li key={_id}>
